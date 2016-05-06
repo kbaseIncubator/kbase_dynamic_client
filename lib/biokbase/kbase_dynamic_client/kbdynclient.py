@@ -134,7 +134,6 @@ class KBDynClient(object):
             arg_hash['context'] = call_context
 
         body = _json.dumps(arg_hash, cls=_JSONObjectEncoder)
-        print body
         response = _requests.post(url, data=body, headers=self._headers,
                                   timeout=self.timeout,
                                   verify=not self.trust_all_ssl_certificates)
@@ -158,7 +157,7 @@ class KBDynClient(object):
     def _prep_call(self, method, version, *args, **keywords):
         del keywords
         ret = self._call(self.callback_url, method, args,
-                         call_context={'service_version': version})
+                         call_context={'service_ver': version})
         if len(ret) == 1:
             return ret[0]
         return ret
