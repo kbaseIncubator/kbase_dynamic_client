@@ -12,7 +12,7 @@ import requests as _requests
 import urlparse as _urlparse
 import random as _random
 import os as _os
-import functools
+import functools as _functools
 
 _CT = 'content-type'
 _AJ = 'application/json'
@@ -189,6 +189,6 @@ class KBDynClient(object):
             raise ValueError('No local functions in module ' + name)
         methstore = self._Mods()
         for m in methods:
-            meth = functools.partial(self._prep_call, name + '.' + m, version)
+            meth = _functools.partial(self._prep_call, name + '.' + m, version)
             setattr(methstore, m, meth)
         setattr(self.mods, name, methstore)
