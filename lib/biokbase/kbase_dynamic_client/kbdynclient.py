@@ -183,8 +183,11 @@ class KBDynClient(object):
         ret = self._call(self.catalog_url, 'Catalog.get_module_info',
                          [{'module_name': module_name}])[0]
         name = ret['module_name']
-        modinfo = ret[version]
-        methods = modinfo['local_functions']
+        modinfo = ret.get(version)
+        if not modinfo:
+            raise ValueError('Module {} has no version {}'.format(
+                module_name, version))
+        methods = modinfo.get('local_functions')
         if not methods:
             raise ValueError('No local functions in module ' + name)
         methstore = self._Mods()
